@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1024145109914",
+    "project_id": "haroonnotes",
+    "storage_bucket": "haroonnotes.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1024145109914:android:6858a1861dc2efc5e44023",
+        "android_client_info": {
+          "package_name": "com.example.mynotes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1024145109914-si8539vi2icjpafih53lt5fqdf5vghft.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOyNU_yqNq8zciVjusDexvVfY5YY2fiBM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1024145109914-si8539vi2icjpafih53lt5fqdf5vghft.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
