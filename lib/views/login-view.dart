@@ -32,49 +32,36 @@ class _LogInViewState extends State<LogInView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'LogIN',
-        ),
-      ),
-      body: FutureBuilder(
-        future: Firebase.initializeApp(
-            options: DefaultFirebaseOptions.currentPlatform),
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.done:
-              return Container(
-                child: Column(
-                  children: [
-                    TextField(
-                      decoration: InputDecoration(
-                        hintText: 'Enter your email ',
-                      ),
-                      controller: _email,
-                    ),
-                    TextField(
-                      decoration:
-                          InputDecoration(hintText: 'Enter your password '),
-                      controller: _password,
-                    ),
-                    TextButton(
-                        onPressed: () async {
-                          await Firebase.initializeApp(
-                              options: DefaultFirebaseOptions.currentPlatform);
-                          final email = _email.text;
-                          final password = _password.text;
-                          await FirebaseAuth.instance
-                              .signInWithEmailAndPassword(
-                                  email: email, password: password);
-                        },
-                        child: Text('Login'))
-                  ],
-                ),
-              );
-            default:
-              return const Text('Loading');
-          }
-        },
+      appBar: AppBar(title: Text('Login')),
+      body: Column(
+        children: [
+          TextField(
+            decoration: InputDecoration(
+              hintText: 'Enter your email ',
+            ),
+            controller: _email,
+          ),
+          TextField(
+            decoration: InputDecoration(hintText: 'Enter your password '),
+            controller: _password,
+          ),
+          TextButton(
+              onPressed: () async {
+                await Firebase.initializeApp(
+                    options: DefaultFirebaseOptions.currentPlatform);
+                final email = _email.text;
+                final password = _password.text;
+                await FirebaseAuth.instance.signInWithEmailAndPassword(
+                    email: email, password: password);
+              },
+              child: Text('Login')),
+          TextButton(
+              onPressed: () {
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil('/register/', (route) => false);
+              },
+              child: Text('Not register yet? Regisdter here!'))
+        ],
       ),
     );
   }
