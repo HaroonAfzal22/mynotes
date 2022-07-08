@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:mynotes/firebase_options.dart';
 import 'package:mynotes/views/login-view.dart';
 import 'package:mynotes/views/rigester_view.dart';
+import 'dart:developer' as devtools show log;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
     theme: ThemeData(
       primarySwatch: Colors.blue,
     ),
@@ -31,23 +33,92 @@ class HomeView extends StatelessWidget {
       builder: (context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.done:
-            return LogInView();
             final user = FirebaseAuth.instance.currentUser;
             if (user != null) {
               if (user.emailVerified) {
-                print('Emial is verified');
+                return NotesView();
               } else {
                 return const RegisterView();
               }
             } else {
-              return LogInView();
+              return const LogInView();
             }
             return const Text('Done');
 
           default:
-            return CircularProgressIndicator();
+            return const CircularProgressIndicator();
         }
       },
     );
   }
+}
+
+enum MenueAction { logout }
+
+class NotesView extends StatefulWidget {
+  const NotesView({Key? key}) : super(key: key);
+
+  @override
+  State<NotesView> createState() => _NotesViewState();
+}
+
+class _NotesViewState extends State<NotesView> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Main Ui'),
+        actions: [
+          PopupMenuButton<MenueAction>(onSelected: (value) async {
+            switch (value) {
+              case MenueAction.logout:
+                final shouldLogout = await ShowLogOutDialog(context);
+                if (shouldLogout) {
+                  await FirebaseAuth.instance.signOut();
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil('/login/', (route) => false);
+                }
+                // TODO: Handle this case.
+                break;
+            }
+          },
+              // child: Text('Logout'),
+              itemBuilder: (context) {
+            return const [
+              PopupMenuItem<MenueAction>(
+                child: Text('Logout'),
+                value: MenueAction.logout,
+              )
+            ];
+          })
+        ],
+      ),
+      body: Center(child: Text('Notes Screen')),
+    );
+  }
+}
+
+Future<bool> ShowLogOutDialog(BuildContext context) {
+  return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Logout'),
+          content: const Text('Are you sure you want to sign out?'),
+          actions: [
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+            ),
+            TextButton(
+              child: const Text('Log Out'),
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+            )
+          ],
+        );
+      }).then((value) => value ?? false);
 }
