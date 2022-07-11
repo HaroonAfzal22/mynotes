@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:mynotes/Constants/routes.dart';
 import 'package:mynotes/firebase_options.dart';
 import 'dart:developer' as devtools show log;
 
@@ -53,8 +54,9 @@ class _LogInViewState extends State<LogInView> {
                   final password = _password.text;
                   await FirebaseAuth.instance.signInWithEmailAndPassword(
                       email: email, password: password);
+
                   Navigator.of(context).pushNamedAndRemoveUntil(
-                    '/notes/',
+                    notesRoute,
                     (route) => false,
                   );
                 } on FirebaseAuthException catch (e) {
@@ -70,7 +72,7 @@ class _LogInViewState extends State<LogInView> {
           TextButton(
               onPressed: () {
                 Navigator.of(context)
-                    .pushNamedAndRemoveUntil('/register/', (route) => false);
+                    .pushNamedAndRemoveUntil(registerRoute, (route) => false);
               },
               child: Text('Not register yet? Regisdter here!'))
         ],
