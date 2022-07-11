@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:mynotes/firebase_options.dart';
+import 'dart:developer' as devtools show log;
 
 class RegisterView extends StatefulWidget {
   const RegisterView({Key? key}) : super(key: key);
@@ -32,17 +33,17 @@ class _MyHomePageState extends State<RegisterView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Rigister')),
+      appBar: AppBar(title: const Text('Rigister')),
       body: Column(
         children: [
           TextField(
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: 'Enter your email ',
             ),
             controller: _email,
           ),
           TextField(
-            decoration: InputDecoration(hintText: 'Enter your password '),
+            decoration: const InputDecoration(hintText: 'Enter your password '),
             controller: _password,
           ),
           TextButton(
@@ -52,13 +53,13 @@ class _MyHomePageState extends State<RegisterView> {
                 await FirebaseAuth.instance.createUserWithEmailAndPassword(
                     email: email, password: password);
               },
-              child: Text('Register')),
+              child: const Text('Register')),
           TextButton(
               onPressed: () {
                 Navigator.of(context)
                     .pushNamedAndRemoveUntil('/login/', (route) => false);
               },
-              child: Text('Already registered? Login here!'))
+              child: const Text('Already registered? Login here!'))
         ],
       ),
     );

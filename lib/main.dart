@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:mynotes/firebase_options.dart';
 import 'package:mynotes/views/login-view.dart';
 import 'package:mynotes/views/rigester_view.dart';
-import 'dart:developer' as devtools show log;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,6 +17,7 @@ void main() {
     routes: {
       '/login/': (context) => const LogInView(),
       '/register/': (context) => const RegisterView(),
+      '/notes/': (context) => const NotesView(),
     },
   ));
 }
