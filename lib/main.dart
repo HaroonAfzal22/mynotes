@@ -54,7 +54,7 @@ class HomeView extends StatelessWidget {
   }
 }
 
-enum MenueAction { logout }
+enum MenuAction { logout }
 
 class NotesView extends StatefulWidget {
   const NotesView({Key? key}) : super(key: key);
@@ -70,9 +70,9 @@ class _NotesViewState extends State<NotesView> {
       appBar: AppBar(
         title: Text('Main Ui'),
         actions: [
-          PopupMenuButton<MenueAction>(onSelected: (value) async {
+          PopupMenuButton<MenuAction>(onSelected: (value) async {
             switch (value) {
-              case MenueAction.logout:
+              case MenuAction.logout:
                 final shouldLogout = await ShowLogOutDialog(context);
                 if (shouldLogout) {
                   await FirebaseAuth.instance.signOut();
@@ -86,9 +86,9 @@ class _NotesViewState extends State<NotesView> {
               // child: Text('Logout'),
               itemBuilder: (context) {
             return const [
-              PopupMenuItem<MenueAction>(
+              PopupMenuItem<MenuAction>(
                 child: Text('Logout'),
-                value: MenueAction.logout,
+                value: MenuAction.logout,
               )
             ];
           })
